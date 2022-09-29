@@ -4,6 +4,12 @@ from mc_don.resources import POSITIONS, cashier
 
 
 class Staff(models.Model):
+    director = 'DI'
+    admin = 'AD'
+    cook = 'CO'
+    cashier = 'CA'
+    cleaner = 'CL'
+
     full_name = models.CharField(max_length=255)
     position = models.CharField(max_length=2, choices=POSITIONS, default=cashier)
     labor_contract = models.IntegerField()
@@ -32,9 +38,9 @@ class Order(models.Model):
 
     def get_duration(self):
         if self.complete:
-            return (self.time_out - self.time_in).total_seconds() // 60
+            return (self.time_out - self.time_in).total_seconds()
         else:
-            return (datetime.now() - self.time_in).total_seconds() // 60
+            return (datetime.now() - self.time_in).total_seconds()
 
 class ProductOrder(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
